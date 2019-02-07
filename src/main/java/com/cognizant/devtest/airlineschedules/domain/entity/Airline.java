@@ -7,7 +7,7 @@ import java.util.List;
 public class Airline {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", precision = 19)
     private Long id;
 
