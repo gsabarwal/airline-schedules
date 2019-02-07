@@ -37,7 +37,7 @@ public class AirlineScheduleController {
 
         AirlineSchedule newAirlineSchedule = airlineScheduleRepository.save(airlineSchedule);
 
-        return newAirlineSchedule;
+        return airlineScheduleRepository.findById(newAirlineSchedule.getId()).orElseThrow(()-> new Exception("airline schedule not found"));
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
@@ -56,7 +56,7 @@ public class AirlineScheduleController {
 
         AirlineSchedule newAirlineSchedule = airlineScheduleRepository.save(airlineSchedule);
 
-        return newAirlineSchedule;
+        return airlineScheduleRepository.findById(newAirlineSchedule.getId()).orElseThrow(()-> new Exception("airline schedule not found"));
     }
 
 

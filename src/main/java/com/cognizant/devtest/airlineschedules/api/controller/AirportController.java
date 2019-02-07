@@ -16,19 +16,19 @@ public class AirportController {
     private AirportRepository airportRepository;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public Airport addAirport(@RequestBody Airport airport) {
+    public Airport addAirport(@RequestBody Airport airport) throws Exception {
 
         Airport newAirport = airportRepository.save(airport);
 
-        return newAirport;
+        return airportRepository.findById(newAirport.getId()).orElseThrow(() -> new Exception("airport not found"));
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
-    public Airport modifyAirport(@RequestBody Airport airport) {
+    public Airport modifyAirport(@RequestBody Airport airport) throws Exception {
 
         Airport modifiedAirport = airportRepository.save(airport);
 
-        return modifiedAirport;
+        return airportRepository.findById(modifiedAirport.getId()).orElseThrow(() -> new Exception("airport not found"));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "application/json")

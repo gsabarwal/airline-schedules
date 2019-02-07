@@ -2,6 +2,7 @@ package com.cognizant.devtest.airlineschedules.api.controller;
 
 import com.cognizant.devtest.airlineschedules.domain.entity.Flight;
 import com.cognizant.devtest.airlineschedules.domain.repository.FlightRepository;
+import com.cognizant.devtest.airlineschedules.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +16,24 @@ public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
 
+    @Autowired
+    private FlightService flightService;
+
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public Flight addFlight(@RequestBody Flight flight) {
+    public Flight addFlight(@RequestBody Flight flight) throws Exception{
+         flightService.createFlight(flight);
 
-        Flight newFlight = flightRepository.save(flight);
+        Flight addedFlight = flightService.getFlightById(flight.getId());
 
-        return newFlight;
+        return addedFlight;
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
-    public Flight modifyFlight(@RequestBody Flight flight) {
+    public Flight modifyFlight(@RequestBody Flight flight) throws Exception{
 
         Flight modifiedFlight = flightRepository.save(flight);
 
-        return modifiedFlight;
+        return flightRepository.findById(modifiedFlight.getId()).orElseThrow(()->new Exception("flight not found"));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "application/json")

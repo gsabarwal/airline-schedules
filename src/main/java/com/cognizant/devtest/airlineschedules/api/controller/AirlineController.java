@@ -16,19 +16,19 @@ public class AirlineController {
     private AirlineRepository airlineRepository;
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public Airline addAirline(@RequestBody Airline airline) {
+    public Airline addAirline(@RequestBody Airline airline) throws Exception {
 
         Airline newAirline = airlineRepository.save(airline);
 
-        return newAirline;
+        return airlineRepository.findById(newAirline.getId()).orElseThrow(()->new Exception("airline not found"));
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
-    public Airline modifyAirline(@RequestBody Airline airline) {
+    public Airline modifyAirline(@RequestBody Airline airline) throws Exception{
 
         Airline modifiedAirline = airlineRepository.save(airline);
 
-        return modifiedAirline;
+        return airlineRepository.findById(modifiedAirline.getId()).orElseThrow(()-> new Exception("airline not found"));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "application/json")
